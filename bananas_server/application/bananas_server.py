@@ -48,6 +48,7 @@ class Application:
             md5sum=content_entry.md5sum,
             dependencies=content_entry.dependencies,
             tags=content_entry.tags,
+            upload_date=content_entry.upload_date,
         )
 
     def get_by_content_id(self, content_id):

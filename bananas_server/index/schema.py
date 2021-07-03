@@ -23,6 +23,7 @@ class ContentEntry(Schema):
     description = fields.String(validate=validate.Length(max=511))
     tags = fields.List(fields.String(validate=validate.Length(max=31)))
     md5sum = fields.Raw(validate=validate.Length(min=16, max=16))
+    upload_date = fields.Integer(data_key="upload-date")
     min_version = fields.List(fields.Integer(), data_key="min-version", missing=None)
     max_version = fields.List(fields.Integer(), data_key="max-version", missing=None)
     raw_dependencies = fields.List(

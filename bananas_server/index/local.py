@@ -95,6 +95,8 @@ class Index:
         md5sum_partial = bytes.fromhex(data["md5sum-partial"])
         md5sum = md5sum_mapping[content_type][unique_id][md5sum_partial]
 
+        upload_date = int(data["upload-date"].timestamp())
+
         dependencies = []
         for dependency in data.get("dependencies", []):
             dep_content_type = get_content_type_from_name(dependency["content-type"])
@@ -130,6 +132,7 @@ class Index:
                 "url": data.get("url", ""),
                 "description": data.get("description", ""),
                 "unique-id": unique_id,
+                "upload-date": upload_date,
                 "md5sum": md5sum,
                 "min-version": min_version,
                 "max-version": max_version,
@@ -151,6 +154,7 @@ class Index:
         size += 1
         for tag in data.get("tags", []):
             size += len(tag) + 2
+        size += 4  # upload_date
 
         if size > 1400:
             raise Exception("Entry would exceed OpenTTD packet size.")

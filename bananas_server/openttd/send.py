@@ -16,7 +16,19 @@ from .protocol.write import (
 
 class OpenTTDProtocolSend:
     async def send_PACKET_CONTENT_SERVER_INFO(
-        self, content_type, content_id, filesize, name, version, url, description, unique_id, md5sum, dependencies, tags
+        self,
+        content_type,
+        content_id,
+        filesize,
+        name,
+        version,
+        url,
+        description,
+        unique_id,
+        md5sum,
+        dependencies,
+        tags,
+        upload_date,
     ):
         data = write_init(PacketTCPContentType.PACKET_CONTENT_SERVER_INFO)
 
@@ -52,6 +64,8 @@ class OpenTTDProtocolSend:
         data = write_uint8(data, len(tags))
         for tag in tags:
             data = write_string(data, tag)
+
+        data = write_uint32(data, int(upload_date.timestamp()))
 
         data = write_presend(data)
         await self.send_packet(data)
